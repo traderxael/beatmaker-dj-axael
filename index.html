@@ -55,4 +55,5 @@ document.getElementById('clear').onclick=()=>{steps=new Array(16).fill(false);re
 document.getElementById('presets').onclick=()=>{localStorage.setItem('beatmaker-pattern',JSON.stringify({steps,bpm:document.getElementById('bpm').value}));document.getElementById('saved').textContent='Patrón guardado ✓'};
 try{const s=JSON.parse(localStorage.getItem('beatmaker-pattern')||'null');if(s&&s.steps){steps=s.steps;document.getElementById('bpm').value=s.bpm||120;document.getElementById('saved').textContent='Patrón cargado ✓'}}catch(e){}
 renderSeq();
+if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js")}
 </script></body></html>
