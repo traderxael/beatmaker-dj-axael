@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BeatMaker Original</title>
+<style>
+body{font-family:system-ui;background:#0f172a;color:#e2e8f0;text-align:center;padding:20px}
+h1{font-size:1.4rem}
+.pads{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:420px;margin:16px auto}
+.pad{height:72px;border-radius:12px;border:0;font-size:1.1rem;cursor:pointer}
+.pad:active,.pad.on{transform:scale(.95);outline:3px solid #38bdf8}
+.bpm{font-size:1.2rem}.btn{padding:10px 18px;border-radius:10px;border:0;background:#38bdf8;color:#020617;font-weight:700}
+.note{opacity:.6;font-size:.85rem}
+</style></head><body>
+<h1>🎛️ BeatMaker Original</h1>
+<p class="note">App original estilo pads — sin copiar FL Studio</p>
+<div class="bpm">BPM <input id="bpm" type="number" value="120" min="60" max="180" style="width:70px"></div>
+<button class="btn" id="play">▶ Play</button>
+<div class="pads" id="pads"></div>
+<p class="note">Tocá pads para sonar (WebAudio) · Hecho para uso privado</p>
+<script>
+const ctx=new (window.AudioContext||window.webkitAudioContext)();
+const notes=[261.63,293.66,329.63,349.23,392,440,523.25,587.33];
+const names=['C4','D4','E4','F4','G4','A4','C5','D5'];
+const padsEl=document.getElementById('pads');
+function tone(f){const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=f;o.type='sine';g.gain.setValueAtTime(.25,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.35);o.connect(g).connect(ctx.destination);o.start();o.stop(ctx.currentTime+.35)}
+notes.forEach((f,i)=>{const b=document.createElement('button');b.className='pad';b.style.background=`hsl(${200+i*18} 80% 55%)`;b.textContent=names[i];b.onclick=()=>{tone(f);b.classList.add('on');setTimeout(()=>b.classList.remove('on'),150)};padsEl.appendChild(b)});
+document.getElementById('play').onclick=()=>{let step=0;const iv=60000/parseInt(document.getElementById('bpm').value)/2;const t=setInterval(()=>{tone(notes[step%notes.length]);step++;if(step>16)clearInterval(t)},iv)};
+</script></body></html>
