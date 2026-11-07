@@ -1,0 +1,12 @@
+{
+  "name": "BeatMaker DJ — Axael",
+  "short_name": "BeatDJ",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "description": "Beat-maker original con pads, drums, bajos y secuenciador. WebAudio puro.",
+  "icons": [
+    {"src": "icon.svg","sizes": "any","type": "image/svg+xml","purpose": "any"}
+  ]
+}
